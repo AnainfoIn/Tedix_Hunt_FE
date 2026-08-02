@@ -1,20 +1,34 @@
 # Tedix Hunt FE
 
-A basic ReactJS/Expo frontend starter with a modular architecture.
+A React + TypeScript Progressive Web App, built with Vite and organized around a feature-based
+architecture. Includes a mock-auth login flow and a landing page as a starting point.
 
 ## Scripts
 
-- `npm start` - start the Expo development server.
-- `npm run android` - start Expo for Android.
-- `npm run ios` - start Expo for iOS.
-- `npm run web` - start Expo for web.
+- `npm run dev` - start the Vite development server.
+- `npm run build` - type-check and build for production (outputs to `dist/`, includes the PWA
+  service worker and manifest).
+- `npm run preview` - serve the production build locally.
 
 ## Architecture
 
 ```text
+index.html          Vite entry point
+vite.config.ts       Vite config, including the PWA plugin (manifest + service worker)
 src/
-  application/  Application composition and top-level providers
-  components/   Reusable UI components and layouts
-  features/     Domain or screen-level modules
-  shared/       Global styles, utilities, and constants
+  main.tsx           App bootstrap
+  app/               Application composition: root component, navigation, providers
+  components/
+    layout/          Page shell/layout components
+    ui/               Reusable, presentation-only UI components
+  features/           Domain or screen-level modules (auth, landing, ...)
+  shared/
+    theme/            CSS custom properties (colors, spacing) and global styles
+public/                Static assets served as-is (favicon, PWA icons)
 ```
+
+## PWA
+
+The app is installable and works offline via a generated service worker
+([vite-plugin-pwa](https://vite-pwa-org.netlify.app/)). Manifest fields (name, icons, theme
+color, etc.) are configured in `vite.config.ts`.
